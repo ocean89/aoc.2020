@@ -1,5 +1,4 @@
 const helpers = require('../../helpers');
-const _ = require('lodash');
 
 const structureRow = (rawRow) => {
   const split = rawRow.split(':');
@@ -14,9 +13,9 @@ const structureRow = (rawRow) => {
 };
 
 const validatePassword = (row) => {
-  const count = row.password.split('').filter(letter => letter === row.letter).length;
-  return count >= row.min && count <= row.max; 
-}
+  const count = row.password.split('').filter((letter) => letter === row.letter).length;
+  return count >= row.min && count <= row.max;
+};
 
 const validCount = helpers.readRows('./input.txt')
   .map(structureRow)

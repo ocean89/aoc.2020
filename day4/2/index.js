@@ -1,5 +1,5 @@
-const helpers = require('../../helpers');
 const _ = require('lodash');
+const helpers = require('../../helpers');
 
 const validators = {
   byr: /^(19[2-9][0-9]|200[0-2])$/,
@@ -15,9 +15,9 @@ const groupRow = (acc, val) => {
   if (val[0] === '') acc.push([]);
   else acc[acc.length - 1] = [..._.last(acc), ...val];
   return acc;
-}
+};
 
-const hasCid = (val) => val.indexOf("cid") >= 0;
+const hasCid = (val) => val.indexOf('cid') >= 0;
 
 const validateKeys = (row) => {
   if (row.length === 8) return true;
@@ -25,7 +25,7 @@ const validateKeys = (row) => {
     return row.find(hasCid) === undefined;
   }
   return false;
-}
+};
 
 const validatePassport = (passport) => {
   let valid = true;
@@ -35,25 +35,24 @@ const validatePassport = (passport) => {
     }
   });
   return valid;
-}
+};
 
 const validateRow = (row) => {
-  if(validateKeys(row)) {
-    const passport =
-      _(row)
-        .map(itm => itm.split(':'))
-        .fromPairs()
-        .value();
+  if (validateKeys(row)) {
+    const passport = _(row)
+      .map((itm) => itm.split(':'))
+      .fromPairs()
+      .value();
     const valid = validatePassport(passport);
     return valid;
   }
   return false;
-}
+};
 
 const data = helpers
   .readRows('./input.txt')
-  .map(str => str.split(' '))
+  .map((str) => str.split(' '))
   .reduce(groupRow, [[]])
-  .filter(validateRow)
+  .filter(validateRow);
 
 console.log(data.length);
